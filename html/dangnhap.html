@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+
+        body {
+            background: url('./image/R.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9); 
+            padding: 50px;
+            width: 100%;
+            max-width: 500px; 
+            border-radius: 12px;
+            box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+   
+        .login-container h2 {
+            font-size: 2.4rem;
+            margin-bottom: 2rem;
+            color: #007bff; 
+        }
+
+
+        .form-control {
+            border-radius: 25px;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            background: rgba(240, 240, 240, 1);
+            color: #333;
+            border: 1px solid #ddd;
+            margin-bottom: 1.5rem;
+        }
+        .form-control::placeholder {
+            color: #888;
+        }
+
+
+        .btn-login {
+            background-color: #007bff; 
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            padding: 0.6rem 2.5rem;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+        .btn-login:hover {
+            background-color: #0056b3;
+        }
+
+
+        .small-link {
+            display: block;
+            margin-top: 1.5rem;
+            color: #555;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .small-link:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function handleLogin(event) {
+            event.preventDefault(); 
+
+    
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+
+     
+            if (username === "user" && password === "1234") { 
+                alert("Đăng nhập thành công!");
+                window.location.href = 'trangchu.html';
+            } else {
+                alert("Tên đăng nhập hoặc mật khẩu không đúng.");
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="login-container">
+        <h3>Tài khoản mẫu: user       <br>    Mật khẩu: 1234</h3>
+        <h2>Đăng Nhập</h2>
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <input type="text" id="username" class="form-control" placeholder="Tên đăng nhập" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" class="form-control" placeholder="Mật khẩu" required>
+            </div>
+            <button type="submit" class="btn btn-login">Đăng Nhập</button>
+            <a href="#" class="small-link">Quên mật khẩu?</a>
+            <a href="dangky.html" class="small-link">Đăng ký tài khoản mới</a>
+        </form>
+    </div>
+</body>
+</html>

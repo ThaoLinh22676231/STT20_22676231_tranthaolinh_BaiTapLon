@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Ký</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('./image/R.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: Arial, sans-serif;
+        }
+        .register-container {
+            width: 100%;
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        .register-container h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+        .form-control {
+            border-radius: 30px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+        .btn-register {
+            background-color: #4ac1d0;
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            padding: 0.5rem 2rem;
+            border-radius: 30px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-register:hover {
+            background-color: #2e8ca3;
+        }
+        .small-link {
+            display: block;
+            margin-top: 1rem;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        .small-link:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+        .info-display {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        /* Sửa kích thước của ô chọn Quê quán */
+        #province {
+            border-radius: 30px;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+        }
+        .error {
+            color: red;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Đăng Ký Tài Khoản</h2>
+        <form id="registerForm">
+            <div class="form-group">
+                <input type="text" id="username" class="form-control" placeholder="Tên đăng nhập" required>
+                <div id="usernameError" class="error" style="display: none;">Tên đăng nhập phải có ít nhất 5 ký tự.</div>
+            </div>
+            <div class="form-group">
+                <input type="email" id="email" class="form-control" placeholder="Email" required>
+                <div id="emailError" class="error" style="display: none;">Email không hợp lệ. Vui lòng nhập lại.</div>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" class="form-control" placeholder="Mật khẩu" required>
+                <div id="passwordError" class="error" style="display: none;">Mật khẩu phải có ít nhất 8 ký tự và chứa cả chữ hoa, chữ thường và số.</div>
+            </div>
+            <div class="form-group">
+                <input type="password" id="confirmPassword" class="form-control" placeholder="Nhập lại mật khẩu" required>
+                <div id="confirmPasswordError" class="error" style="display: none;">Mật khẩu không khớp.</div>
+            </div>
+            <div class="form-group">
+                <input type="date" id="dob" class="form-control" placeholder="Ngày sinh" required>
+                <div id="dobError" class="error" style="display: none;">Bạn phải đủ 18 tuổi để đăng ký.</div>
+            </div>
+            <div class="form-group">
+                <select id="province" class="form-control" required>
+                    <option value="">Quê Quán</option>
+                    <option value="Hà Nội">Hà Nội</option>
+                    <option value="TP.HCM">TP.HCM</option>
+                    <option value="Đà Nẵng">Đà Nẵng</option>
+                    <option value="Hải Phòng">Hải Phòng</option>
+                    <option value="Cần Thơ">Cần Thơ</option>
+                    <option value="An Giang">An Giang</option>
+                    <option value="Bắc Giang">Bắc Giang</option>
+                    <option value="Bắc Ninh">Bắc Ninh</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-register">Đăng Ký</button>
+            <a href="login.html" class="small-link">Đã có tài khoản? Đăng nhập ngay!</a>
+        </form>
+        
+        <div id="infoDisplay" class="info-display" style="display: none;">
+            <h4>Thông Tin Đăng Ký</h4>
+            <p><strong>Tên đăng nhập:</strong> <span id="displayUsername"></span></p>
+            <p><strong>Email:</strong> <span id="displayEmail"></span></p>
+            <p><strong>Mật khẩu:</strong> <span id="displayPassword"></span></p>
+            <p><strong>Ngày sinh:</strong> <span id="displayDob"></span></p>
+            <p><strong>Quê quán:</strong> <span id="displayProvince"></span></p>
+        </div>
+    </div>
+
+    <script>
+        function validateUsername() {
+            const username = document.getElementById('username').value;
+            if (username.length < 5) {
+                document.getElementById("usernameError").style.display = "block";
+            } else {
+                document.getElementById("usernameError").style.display = "none";
+            }
+        }
+
+        function validateEmail() {
+            const email = document.getElementById('email').value;
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailPattern.test(email)) {
+                document.getElementById("emailError").style.display = "block";
+            } else {
+                document.getElementById("emailError").style.display = "none";
+            }
+        }
+
+        function validatePassword() {
+            const password = document.getElementById('password').value;
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+            if (!passwordPattern.test(password)) {
+                document.getElementById("passwordError").style.display = "block";
+            } else {
+                document.getElementById("passwordError").style.display = "none";
+            }
+        }
+
+        function validateConfirmPassword() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (password !== confirmPassword) {
+                document.getElementById("confirmPasswordError").style.display = "block";
+            } else {
+                document.getElementById("confirmPasswordError").style.display = "none";
+            }
+        }
+
+        function validateDob() {
+            const dob = document.getElementById('dob').value;
+            const birthDate = new Date(dob);
+            const today = new Date();
+            const age = today.getFullYear() - birthDate.getFullYear();
+            if (age < 18) {
+                document.getElementById("dobError").style.display = "block";
+            } else {
+                document.getElementById("dobError").style.display = "none";
+            }
+        }
+
+        document.getElementById('username').addEventListener('input', validateUsername);
+        document.getElementById('email').addEventListener('input', validateEmail);
+        document.getElementById('password').addEventListener('input', validatePassword);
+        document.getElementById('confirmPassword').addEventListener('input', validateConfirmPassword);
+        document.getElementById('dob').addEventListener('input', validateDob);
+
+        document.getElementById('registerForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Kiểm tra lỗi trước khi hiển thị thông tin
+            if (document.getElementById('usernameError').style.display === "none" &&
+                document.getElementById('emailError').style.display === "none" &&
+                document.getElementById('passwordError').style.display === "none" &&
+                document.getElementById('confirmPasswordError').style.display === "none" &&
+                document.getElementById('dobError').style.display === "none") {
+
+                const username = document.getElementById('username').value;
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const dob = document.getElementById('dob').value;
+                const province = document.getElementById('province').value;
+
+                document.getElementById("displayUsername").innerText = username;
+                document.getElementById("displayEmail").innerText = email;
+                document.getElementById("displayPassword").innerText = "******";
+                document.getElementById("displayDob").innerText = dob;
+                document.getElementById("displayProvince").innerText = province;
+                document.getElementById("infoDisplay").style.display = "block";
+
+                // Chuyển trang sau khi đăng ký thành công
+                setTimeout(function() {
+                    window.location.href = 'trangchu.html'; // Thay 'success.html' bằng trang bạn muốn chuyển tới
+                }, 3000); // 2 giây sau khi hiển thị thông tin
+            }
+        });
+    </script>
+</body>
+</html>
